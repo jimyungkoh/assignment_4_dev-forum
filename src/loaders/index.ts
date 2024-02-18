@@ -1,6 +1,6 @@
-import "../prisma";
-import { ExpressApp } from "../types/ExpressApp.type";
-import expressLoader from "./expressLoader";
+import "../database/sql";
+import { ExpressApp } from "../types/Express.type";
+import expressLoader from "./express.loader";
 
 const loaders = {
   init: async ({ app }: ExpressApp) => {
