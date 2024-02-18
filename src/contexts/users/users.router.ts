@@ -4,6 +4,7 @@ import {
   ConflictError,
   UnauthorizedError,
 } from "../../errors/http-client-side.error";
+import formattedResponse from "../../utils/formatted-response";
 import wrapAsync from "../../utils/wrap-async";
 import usersService from "./service";
 import { UserRequestDto, userRequestDtoSchema } from "./users.dto";
@@ -45,6 +46,19 @@ usersRouter.post(
     const token = jwt.sign({}, jwtSecret, { subject: user.email });
 
     res.status(200).header("authorization", `Bearer ${token}`).json({ token });
+  })
+);
+
+usersRouter.get(
+  "/likes",
+  wrapAsync(async (req, res, next) => {
+    const { email } = req.user as { email: string };
+
+    if (!email) throw new UnauthorizedError("사용자 정보를 찾을 수 없습니다.");
+
+    const result = await usersService.getLikes(email);
+
+    res.status(200).json(formattedResponse(true, result));
   })
 );
 

@@ -36,3 +36,16 @@ export const validateUser = async (userDto: UserRequestDto) => {
 
   return new UserResponseDto(user.email);
 };
+
+export const getLikes = async (email: string) => {
+  return await prismaClient.like.findMany({
+    where: {
+      liker: {
+        email,
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
