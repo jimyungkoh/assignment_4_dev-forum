@@ -8,6 +8,7 @@ const publicPathRegexes = [/^\/users\/sign-in$/, /^\/users\/sign-up$/];
 const getAccessibleRegexes = [
   /^\/boards\/latest\/posts$/,
   /^\/boards\/(frontend|backend)\/posts$/,
+  /^\/boards\/(frontend|backend)\/posts\/([^\/]+)$/,
 ];
 
 export default function (req: Request, res: Response, next: NextFunction) {
