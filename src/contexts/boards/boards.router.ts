@@ -4,7 +4,6 @@ import {
   NotFoundError,
   UnauthorizedError,
 } from "../../errors/http-client-side.error";
-import HttpError from "../../errors/http.error";
 import formattedResponse from "../../utils/formatted-response";
 import wrapAsync from "../../utils/wrap-async";
 import { BoardType, isBoardType } from "./boards.type";
@@ -68,12 +67,7 @@ boardsRouter.post(
     const { boardName } = req.params;
     const { email } = req.user as { email: string };
 
-    if (!email) {
-      throw new HttpError({
-        statusCode: 401,
-        message: "사용자 정보를 찾을 수 없습니다.",
-      });
-    }
+    if (!email) throw new UnauthorizedError("사용자 정보를 찾을 수 없습니다.");
 
     const createPostDto = new CreatePostDto(
       email,
