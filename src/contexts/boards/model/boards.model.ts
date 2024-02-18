@@ -85,9 +85,20 @@ export const findOnePostById = async (postId: string) => {
   return await prismaClient.post.findUnique({
     where: { id: postId },
     select: {
+      id: true,
+      title: true,
+      content: true,
       author: {
         select: { email: true },
       },
+      _count: {
+        select: {
+          Like: true,
+          Comment: true,
+        },
+      },
+      createdAt: true,
+      updatedAt: true,
     },
   });
 };
